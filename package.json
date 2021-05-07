@@ -1,0 +1,27 @@
+{
+  "name": "phonebook-backend",
+  "version": "1.0.0",
+  "description": "This repo contains my backend homework submissions for the Fullstack Open 2021 course.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ma8642/fullstackopen2021-backend.git"
+  },
+  "author": "Marley Alford",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ma8642/fullstackopen2021-backend/issues"
+  },
+  "homepage": "https://github.com/ma8642/fullstackopen2021-backend#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
