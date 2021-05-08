@@ -26,9 +26,8 @@ let persons = [
   },
 ];
 
-const info = `<p>Phonebook has info for ${
-  persons.length
-} people</p><p>${new Date()}</p>`;
+const info = (persons) =>
+  `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`;
 
 const generateId = () => {
   return Math.floor(Math.random() * 100000);
@@ -39,7 +38,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/info", (request, response) => {
-  response.send(info);
+  response.send(info(persons));
 });
 
 app.get("/api/persons", (request, response) => {
@@ -67,7 +66,11 @@ app.post("/api/persons", (request, response) => {
   if (!body.name || !body.number) {
     return response
       .status(400)
-      .json({ error: "Please provide both name and number" });
+      .json({ error: "request must include both name and number" });
+  } else {
+    if (persons.some((p) => p.name === body.name)) {
+      return response.status(409).json({ error: "name must be unique" });
+    }
   }
   const person = {
     name: body.name,
