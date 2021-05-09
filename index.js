@@ -66,13 +66,9 @@ app.get("/api/persons", (request, response) => {
 });
 
 app.get("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  const person = persons.find((p) => p.id === id);
-  if (person) {
+  Person.findById(request.params.id).then((person) => {
     response.json(person);
-  } else {
-    response.status(404).end();
-  }
+  });
 });
 
 app.delete("/api/persons/:id", (request, response) => {
@@ -87,18 +83,15 @@ app.post("/api/persons", (request, response) => {
     return response
       .status(400)
       .json({ error: "request must include both name and number" });
-  } else {
-    if (persons.some((p) => p.name === body.name)) {
-      return response.status(409).json({ error: "name must be unique" });
-    }
   }
-  const person = {
+  const person = new Person({
     name: body.name,
     number: body.number,
-    id: generateId(),
-  };
-  persons = persons.concat(person);
-  response.json(person);
+  });
+
+  person.save().then((savedPerson) => {
+    response.json(person);
+  });
 });
 
 const PORT = process.env.PORT;
