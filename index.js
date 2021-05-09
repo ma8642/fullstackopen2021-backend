@@ -18,6 +18,7 @@ morgan.token("body", function (req, res) {
 app.use(
   morgan(":method :url :status :res[content-length] - :response-time ms :body")
 );
+// 3.16 already did that!
 const errorHandler = (error, request, response, next) => {
   console.error(error.message);
   if (error.name === "CastError") {
