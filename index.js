@@ -29,29 +29,6 @@ const errorHandler = (error, request, response, next) => {
 
 const Person = require("./models/person");
 
-let persons = [
-  {
-    name: "Marnie Bibbs",
-    number: "(954) 823-1278",
-    id: 1,
-  },
-  {
-    name: "Zamazie Book",
-    number: "(363) 463-4638",
-    id: 2,
-  },
-  {
-    name: "Archie Reynolds",
-    number: "(563) 753-8763",
-    id: 3,
-  },
-  {
-    name: "Blix Shaw",
-    number: "(958) 853-8758",
-    id: 4,
-  },
-];
-
 const info = (persons) =>
   `<p>Phonebook has info for ${persons.length} people</p><p>${new Date()}</p>`;
 
@@ -60,7 +37,9 @@ app.get("/", (request, response) => {
 });
 
 app.get("/info", (request, response) => {
-  response.send(info(persons));
+  Person.find({}).then((persons) => {
+    response.send(info(persons));
+  });
 });
 
 app.get("/api/persons", (request, response) => {
@@ -70,6 +49,7 @@ app.get("/api/persons", (request, response) => {
 });
 
 app.get("/api/persons/:id", (request, response) => {
+  // Exercise 3.18 - already did that!
   Person.findById(request.params.id).then((person) => {
     response.json(person);
   });
